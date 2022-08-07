@@ -1,25 +1,16 @@
+import React from "react";
 import Card from "./components/Card";
 import Header from "./components/Header";
 import Cart from "./components/Cart";
 
-const dataSneakers = [
-    {
-        title: "Мужские Кроссовки Nike Blazer Mid Suede",
-        price: 12999,
-        imageUrl: "/sneakers/nike_blazer.jpg",
-    },
-    {
-        title: "Мужские Кроссовки Nike Air Max 270",
-        price: 12999,
-        imageUrl: "/sneakers/nike_air.jpg",
-    },
-];
-
 function App() {
+    const [items, setItems] = React.useState([]);
+    const [toggleCart, setToggleCart] = React.useState(false);
+
     return (
         <div className="wrapper clear">
-            <Cart />
-            <Header />
+            {toggleCart && <Cart closeCart={() => setToggleCart(false)} />}
+            <Header showCart={() => setToggleCart(true)} />
             <div className="content p-40">
                 <div className="d-flex mb-40 align-center justify-between">
                     <h1>Все кроссовки</h1>
@@ -28,9 +19,8 @@ function App() {
                         <input placeholder="Поиск..." />
                     </div>
                 </div>
-
-                <div className="cards_container d-flex justify-between">
-                    {dataSneakers.map((card) => (
+                <div className="cards_container d-flex flex-wrap justify-between">
+                    {items.map((card) => (
                         <Card
                             title={card.title}
                             price={card.price}

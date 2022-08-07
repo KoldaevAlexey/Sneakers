@@ -1,10 +1,11 @@
-function Cart() {
+function Cart(props) {
     return (
-        <div style={{ display: "none" }} className="cart_wrapper">
+        <div className="cart_wrapper">
             <div className="cart">
                 <h2 className="d-flex justify-between">
                     Корзина{" "}
                     <img
+                        onClick={props.closeCart}
                         className="btn_remove"
                         src="img/btn_remove.svg"
                         alt="remove"

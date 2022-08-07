@@ -18,19 +18,4 @@
         box-shadow: 0px 14px 30px rgba(0, 0, 0, 0.05);
         transform: translateY(-5px);
     }
-    .add_btn:hover {
-        svg {
-            rect {
-                fill: azure;
-            }
-        }
-    }
-
-    .favorite:hover {
-        svg {
-            rect {
-                stroke: rgb(249, 200, 200);
-            }
-        }
-    }
 }
