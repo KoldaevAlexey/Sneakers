@@ -1,4 +1,8 @@
 function Cart(props) {
+    const deleteItem = (item) => {
+        props.deleteCard(item);
+    };
+
     return (
         <div className="cart_wrapper">
             <div className="cart">
@@ -12,46 +16,27 @@ function Cart(props) {
                     />
                 </h2>
                 <div className="cart_items_wrapper">
-                    <div className="cart_item d-flex align-center">
-                        <img
-                            className="mr-20"
-                            width={70}
-                            height={70}
-                            src="sneakers/nike_air.jpg"
-                            alt="nike_air_min."
-                        />
-                        <div>
-                            <p className="mb-5">
-                                Мужские Кроссовки <br /> Nike Air Max 270
-                            </p>
-                            <b>12 999 руб.</b>
+                    {props.items.map((card) => (
+                        <div className="cart_item d-flex align-center">
+                            <img
+                                className="mr-20"
+                                width={70}
+                                height={70}
+                                src={card.imageUrl}
+                                alt="nike_air_min."
+                            />
+                            <div>
+                                <p className="mb-5">{card.title}</p>
+                                <b>{card.price} руб.</b>
+                            </div>
+                            <img
+                                onClick={() => deleteItem(card)}
+                                className="btn_remove"
+                                src="img/btn_remove.svg"
+                                alt="remove"
+                            />
                         </div>
-                        <img
-                            className="btn_remove"
-                            src="img/btn_remove.svg"
-                            alt="remove"
-                        />
-                    </div>
-                    <div className="cart_item d-flex align-center">
-                        <img
-                            className="mr-20"
-                            width={70}
-                            height={70}
-                            src="sneakers/nike_air.jpg"
-                            alt="nike_air_min."
-                        />
-                        <div>
-                            <p className="mb-5">
-                                Мужские Кроссовки <br /> Nike Air Max 270
-                            </p>
-                            <b>12 999 руб.</b>
-                        </div>
-                        <img
-                            className="btn_remove"
-                            src="img/btn_remove.svg"
-                            alt="remove"
-                        />
-                    </div>
+                    ))}
                 </div>
 
                 <div className="total_wrapper">

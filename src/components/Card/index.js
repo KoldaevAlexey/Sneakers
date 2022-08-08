@@ -5,7 +5,9 @@ function Card(props) {
     const [addBtnToggle, setAddChecked] = React.useState(false);
 
     const handleAddBtn = () => {
+        props.addItemCart();
         setAddChecked(!addBtnToggle);
+        console.log(props.id);
     };
 
     return (
