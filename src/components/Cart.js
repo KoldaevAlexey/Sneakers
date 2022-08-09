@@ -1,8 +1,4 @@
 function Cart(props) {
-    const deleteItem = (item) => {
-        props.deleteCard(item);
-    };
-
     return (
         <div className="cart_wrapper">
             <div className="cart">
@@ -30,7 +26,7 @@ function Cart(props) {
                                 <b>{card.price} руб.</b>
                             </div>
                             <img
-                                onClick={() => deleteItem(card)}
+                                onClick={() => props.deleteCard(card.id)}
                                 className="btn_remove"
                                 src="img/btn_remove.svg"
                                 alt="remove"

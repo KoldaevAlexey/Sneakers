@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 import Card from "./components/Card";
 import Header from "./components/Header";
 import Cart from "./components/Cart";
@@ -6,26 +7,39 @@ import Cart from "./components/Cart";
 function App() {
     const [items, setItems] = React.useState([]);
     const [cartItems, setCartItems] = React.useState([]);
+    const [searchItem, setSearchItems] = React.useState();
     const [toggleCart, setToggleCart] = React.useState(false);
 
     const handlerAddItemCart = (card) => {
+        axios.post(
+            "https://62efc45857311485d127eb48.mockapi.io/cartItems",
+            card
+        );
         setCartItems([...cartItems, card]);
     };
 
-    const handlerRemoveItemCart = (card) => {
-        setCartItems(
-            cartItems.filter((element) => element.title !== card.title)
+    const removeItemCart = (id) => {
+        axios.delete(
+            `https://62efc45857311485d127eb48.mockapi.io/cartItems/${id}`
         );
+        setCartItems((prev) => prev.filter((item) => item.id !== id));
+    };
+
+    const changeSearchInput = (event) => {
+        setSearchItems(event.target.value);
+    };
+
+    const clearSeacrhInput = () => {
+        setSearchItems("");
     };
 
     React.useEffect(() => {
-        fetch("https://62efc45857311485d127eb48.mockapi.io/items")
-            .then((data) => {
-                return data.json();
-            })
-            .then((json) => {
-                setItems(json);
-            });
+        axios
+            .get("https://62efc45857311485d127eb48.mockapi.io/items")
+            .then((res) => setItems(res.data));
+        axios
+            .get("https://62efc45857311485d127eb48.mockapi.io/cartItems")
+            .then((res) => setCartItems(res.data));
     }, []);
 
     return (
@@ -33,7 +47,7 @@ function App() {
             {toggleCart && (
                 <Cart
                     items={cartItems}
-                    deleteCard={(item) => handlerRemoveItemCart(item)}
+                    deleteCard={(id) => removeItemCart(id)}
                     closeCart={() => setToggleCart(false)}
                 />
             )}
@@ -43,10 +57,21 @@ function App() {
                     <h1>Все кроссовки</h1>
                     <div className="search-block d-flex">
                         <img src="/img/search.svg" alt="search" />
-                        <input placeholder="Поиск..." />
+                        <input
+                            onChange={changeSearchInput}
+                            value={searchItem}
+                            placeholder="Поиск..."
+                        />
+                        {searchItem && (
+                            <img
+                                src="/img/btn_remove.svg"
+                                alt="clear"
+                                onClick={clearSeacrhInput}
+                            />
+                        )}
                     </div>
                 </div>
-                <div className="cards_container d-flex flex-wrap justify-between">
+                <div className="cards_container d-flex flex-wrap">
                     {items.map((card) => (
                         <Card
                             title={card.title}
