@@ -19,14 +19,16 @@ function Cart(props) {
                                 width={70}
                                 height={70}
                                 src={card.imageUrl}
-                                alt="nike_air_min."
+                                alt="item"
                             />
                             <div>
                                 <p className="mb-5">{card.title}</p>
                                 <b>{card.price} руб.</b>
                             </div>
                             <img
-                                onClick={() => props.deleteCard(card.id)}
+                                onClick={() =>
+                                    props.deleteCard(card.id, card.title)
+                                }
                                 className="btn_remove"
                                 src="img/btn_remove.svg"
                                 alt="remove"

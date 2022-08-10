@@ -18,11 +18,11 @@ function App() {
         setCartItems([...cartItems, card]);
     };
 
-    const removeItemCart = (id) => {
+    const removeItemCart = (id, title) => {
         axios.delete(
             `https://62efc45857311485d127eb48.mockapi.io/cartItems/${id}`
         );
-        setCartItems((prev) => prev.filter((item) => item.id !== id));
+        setCartItems((prev) => prev.filter((item) => item.title !== title));
     };
 
     const changeSearchInput = (event) => {
@@ -47,7 +47,7 @@ function App() {
             {toggleCart && (
                 <Cart
                     items={cartItems}
-                    deleteCard={(id) => removeItemCart(id)}
+                    deleteCard={(id, title) => removeItemCart(id, title)}
                     closeCart={() => setToggleCart(false)}
                 />
             )}
@@ -72,15 +72,23 @@ function App() {
                     </div>
                 </div>
                 <div className="cards_container d-flex flex-wrap">
-                    {items.map((card) => (
-                        <Card
-                            title={card.title}
-                            price={card.price}
-                            imageUrl={card.imageUrl}
-                            addFavorite={1}
-                            addItemCart={() => handlerAddItemCart(card)}
-                        />
-                    ))}
+                    {items
+                        /* .filter((item) =>
+                            item.title
+                                .toLowerCase()
+                                .includes(
+                                    searchItem && searchItem.toLowerCase()
+                                )
+                        ) */
+                        .map((card, index) => (
+                            <Card
+                                key={index}
+                                title={card.title}
+                                price={card.price}
+                                imageUrl={card.imageUrl}
+                                addItemCart={() => handlerAddItemCart(card)}
+                            />
+                        ))}
                 </div>
             </div>
         </div>
