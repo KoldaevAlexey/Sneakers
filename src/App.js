@@ -17,20 +17,25 @@ function App() {
         setCartItems([...cartItems, card]);
     };
 
-    const handlerAddToFavorite = (card) => {
-        if (favoriteItems.find((obj) => obj.id === card.id)) {
-            axios.delete(
-                `https://62efc45857311485d127eb48.mockapi.io/favorite/${card.id}`
-            );
-            setFavoriteItems((prev) =>
-                prev.filter((item) => item.id !== card.id)
-            );
-        } else {
-            axios.post(
-                "https://62efc45857311485d127eb48.mockapi.io/favorite",
-                card
-            );
-            setFavoriteItems((prev) => [...prev, card]);
+    const handlerAddToFavorite = async (card) => {
+        try {
+            if (favoriteItems.find((obj) => obj.id === card.id)) {
+                axios.delete(
+                    `https://62efc45857311485d127eb48.mockapi.io/favorite/${card.id}`
+                );
+                setFavoriteItems((prev) =>
+                    prev.filter((item) => item.id !== card.id)
+                );
+            } else {
+                const { data } = await axios.post(
+                    "https://62efc45857311485d127eb48.mockapi.io/favorite",
+                    card
+                );
+
+                setFavoriteItems((prev) => [...prev, data]);
+            }
+        } catch (error) {
+            alert("Ошибка при добавлении в Избранное");
         }
     };
 
