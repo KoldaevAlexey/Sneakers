@@ -1,45 +1,44 @@
 import React from "react";
 import styles from "./Card.module.scss";
 
-function Card(props) {
+function Card({
+    id,
+    title,
+    price,
+    imageUrl,
+    addToFavorite,
+    addItemCart,
+    favorited = false,
+}) {
     const [addBtnToggle, setAddChecked] = React.useState(false);
-    const [favorite, setFavorite] = React.useState(false);
+    const [favorite, setFavorite] = React.useState(favorited);
 
     const handleAddBtn = () => {
-        props.addItemCart();
+        addItemCart();
         setAddChecked(!addBtnToggle);
-        console.log(props.id);
+    };
+
+    const handleAddToFavorite = () => {
+        setFavorite(!favorite);
+        addToFavorite({ id, title, price, imageUrl });
     };
 
     return (
         <div className={styles.card}>
-            <div className={styles.favorite}>
-                {!favorite ? (
-                    <img
-                        onClick={() => setFavorite(true)}
-                        src="/img/like.svg"
-                        alt="unliked"
-                    />
+            <div onClick={handleAddToFavorite} className={styles.favorite}>
+                {favorite ? (
+                    <img src="/img/like-checked.svg" alt="liked" />
                 ) : (
-                    <img
-                        onClick={() => setFavorite(false)}
-                        src="/img/like-checked.svg"
-                        alt="liked"
-                    />
+                    <img src="/img/like.svg" alt="unliked" />
                 )}
             </div>
 
-            <img
-                width={133}
-                height={112}
-                src={props.imageUrl}
-                alt="nike_blazer"
-            />
-            <h5>{props.title}</h5>
+            <img width={133} height={112} src={imageUrl} alt="nike_blazer" />
+            <h5>{title}</h5>
             <div className="d-flex justify-between align-center">
                 <div className="d-flex flex-column">
                     <span>Цена:</span>
-                    <b>{props.price} руб.</b>
+                    <b>{price} руб.</b>
                 </div>
                 <div className={styles.add_btn}>
                     <img

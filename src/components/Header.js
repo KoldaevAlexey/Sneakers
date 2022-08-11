@@ -1,18 +1,22 @@
+import { Link } from "react-router-dom";
+
 function Header(props) {
     return (
         <header className="d-flex justify-between align-center">
-            <div className="d-flex align-center">
-                <img
-                    src="/img/logo.png"
-                    alt="logo"
-                    width={40}
-                    height={40}
-                ></img>
-                <div>
-                    <h3 className="text-uppercase">React Sneakers</h3>
-                    <p className="opacity-5">Магазин лучших кроссовок</p>
+            <Link to="/">
+                <div className="d-flex align-center">
+                    <img
+                        src="/img/logo.png"
+                        alt="logo"
+                        width={40}
+                        height={40}
+                    ></img>
+                    <div>
+                        <h3 className="text-uppercase">React Sneakers</h3>
+                        <p className="opacity-5">Магазин лучших кроссовок</p>
+                    </div>
                 </div>
-            </div>
+            </Link>
             <ul className="d-flex">
                 <li onClick={props.showCart} className="cart_image mr-30">
                     <svg
@@ -47,6 +51,13 @@ function Header(props) {
                     </svg>
                     <span>1205 руб.</span>
                 </li>
+                <Link to="/favorites">
+                    <img
+                        className="favorite_img"
+                        src="/img/favorite.svg"
+                        alt="favorite"
+                    />
+                </Link>
                 <li>
                     <svg
                         width="20"

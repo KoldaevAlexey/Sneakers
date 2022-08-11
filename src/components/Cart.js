@@ -1,18 +1,18 @@
-function Cart(props) {
+function Cart({ closeCart, removeItem, items = [] }) {
     return (
         <div className="cart_wrapper">
             <div className="cart">
                 <h2 className="d-flex justify-between">
                     Корзина{" "}
                     <img
-                        onClick={props.closeCart}
+                        onClick={closeCart}
                         className="btn_remove"
                         src="img/btn_remove.svg"
                         alt="remove"
                     />
                 </h2>
                 <div className="cart_items_wrapper">
-                    {props.items.map((card) => (
+                    {items.map((card) => (
                         <div className="cart_item d-flex align-center">
                             <img
                                 className="mr-20"
@@ -26,9 +26,7 @@ function Cart(props) {
                                 <b>{card.price} руб.</b>
                             </div>
                             <img
-                                onClick={() =>
-                                    props.deleteCard(card.id, card.title)
-                                }
+                                onClick={() => removeItem(card.title)}
                                 className="btn_remove"
                                 src="img/btn_remove.svg"
                                 alt="remove"
