@@ -9,12 +9,13 @@ function Card({
     addToFavorite,
     addItemCart,
     favorited = false,
+    itemInCart = false,
 }) {
-    const [addBtnToggle, setAddChecked] = React.useState(false);
+    const [addBtnToggle, setAddChecked] = React.useState(itemInCart);
     const [favorite, setFavorite] = React.useState(favorited);
 
     const handleAddBtn = () => {
-        addItemCart();
+        addItemCart({ id, title, price, imageUrl });
         setAddChecked(!addBtnToggle);
     };
 

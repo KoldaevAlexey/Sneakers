@@ -7,6 +7,7 @@ function Home({
     clearSeacrhInput,
     handlerAddItemCart,
     handlerAddToFavorite,
+    cartItems,
 }) {
     return (
         <div className="content p-40">
@@ -37,8 +38,9 @@ function Home({
                             searchItem && searchItem.toLowerCase()
                         )
                 ) */
-                    .map((card) => (
+                    .map((card, index) => (
                         <Card
+                            key={index}
                             id={card.id}
                             title={card.title}
                             price={card.price}

@@ -26,7 +26,7 @@ function Cart({ closeCart, removeItem, items = [] }) {
                                 <b>{card.price} руб.</b>
                             </div>
                             <img
-                                onClick={() => removeItem(card.title)}
+                                onClick={() => removeItem(card)}
                                 className="btn_remove"
                                 src="img/btn_remove.svg"
                                 alt="remove"
