@@ -1,4 +1,5 @@
 import Card from "../components/Card";
+import Loader from "../components/Loader";
 
 function Home({
     items,
@@ -7,7 +8,8 @@ function Home({
     clearSeacrhInput,
     handlerAddItemCart,
     handlerAddToFavorite,
-    cartItems,
+    loaded,
+    totalPrice,
 }) {
     return (
         <div className="content p-40">
@@ -30,25 +32,42 @@ function Home({
                 </div>
             </div>
             <div className="cards_container d-flex flex-wrap">
-                {items
-                    /* .filter((item) =>
+                {loaded ? (
+                    <>
+                        {items
+                            /* .filter((item) =>
                     item.title
                         .toLowerCase()
                         .includes(
                             searchItem && searchItem.toLowerCase()
                         )
                 ) */
-                    .map((card, index) => (
-                        <Card
-                            key={index}
-                            id={card.id}
-                            title={card.title}
-                            price={card.price}
-                            imageUrl={card.imageUrl}
-                            addToFavorite={(obj) => handlerAddToFavorite(obj)}
-                            addItemCart={() => handlerAddItemCart(card)}
-                        />
-                    ))}
+                            .map((card, index) => (
+                                <Card
+                                    key={index}
+                                    id={card.id}
+                                    title={card.title}
+                                    price={card.price}
+                                    imageUrl={card.imageUrl}
+                                    addToFavorite={(obj) =>
+                                        handlerAddToFavorite(obj)
+                                    }
+                                    addItemCart={() => handlerAddItemCart(card)}
+                                />
+                            ))}
+                    </>
+                ) : (
+                    <>
+                        <Loader />
+                        <Loader />
+                        <Loader />
+                        <Loader />
+                        <Loader />
+                        <Loader />
+                        <Loader />
+                        <Loader />
+                    </>
+                )}
             </div>
         </div>
     );
