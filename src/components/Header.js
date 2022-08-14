@@ -1,6 +1,10 @@
+import React from "react";
 import { Link } from "react-router-dom";
+import StoreContext from "../context";
 
 function Header(props) {
+    const { cartItems } = React.useContext(StoreContext);
+
     return (
         <header className="d-flex justify-between align-center">
             <Link to="/">
@@ -49,7 +53,12 @@ function Header(props) {
                             strokeLinejoin="round"
                         />
                     </svg>
-                    <span>1205 руб.</span>
+                    <span>
+                        {cartItems.length > 0
+                            ? props.cartTotalPrice(cartItems)
+                            : 0}{" "}
+                        руб.
+                    </span>
                 </li>
                 <Link to="/favorites">
                     <img

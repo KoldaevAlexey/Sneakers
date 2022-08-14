@@ -1,12 +1,4 @@
-function Cart({ closeCart, removeItem, items = [] }) {
-    const sumTotalPrice = (card) => {
-        let sum = 0;
-        card.forEach((item) => {
-            sum += item.price;
-        });
-        return sum;
-    };
-
+function Cart({ closeCart, removeItem, items = [], cartTotalPrice }) {
     return (
         <div className="cart_wrapper">
             <div className="cart">
@@ -48,7 +40,7 @@ function Cart({ closeCart, removeItem, items = [] }) {
                         <li className="d-flex justify-between">
                             <span>Итого:</span>
                             <div></div>
-                            <b>{sumTotalPrice(items)} руб.</b>
+                            <b>{cartTotalPrice(items)} руб.</b>
                         </li>
                         <li className="d-flex justify-between">
                             <span>Налог 5%:</span>

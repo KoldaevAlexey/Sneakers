@@ -9,7 +9,6 @@ function Home({
     handlerAddItemCart,
     handlerAddToFavorite,
     loaded,
-    totalPrice,
 }) {
     return (
         <div className="content p-40">

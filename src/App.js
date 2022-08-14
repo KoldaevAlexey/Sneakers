@@ -1,5 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
+import StoreContext from "./context";
 import axios from "axios";
 import Home from "./pages/Home";
 import Favorites from "./pages/Favorites";
@@ -98,46 +99,59 @@ function App() {
         setSearchItems("");
     };
 
+    function cartTotalPrice(items) {
+        let sum = 0;
+        cartItems.forEach((item) => {
+            sum += item.price;
+        });
+        return sum;
+    }
+
     return (
-        <div className="wrapper clear">
-            {toggleCart && (
-                <Cart
-                    items={cartItems}
-                    removeItem={removeItemCart}
-                    closeCart={() => setToggleCart(false)}
+        <StoreContext.Provider value={{ items, cartItems, favoriteItems }}>
+            <div className="wrapper clear">
+                {toggleCart && (
+                    <Cart
+                        items={cartItems}
+                        removeItem={removeItemCart}
+                        closeCart={() => setToggleCart(false)}
+                        cartTotalPrice={cartTotalPrice}
+                    />
+                )}
+
+                <Header
+                    showCart={() => setToggleCart(true)}
+                    cartTotalPrice={cartTotalPrice}
                 />
-            )}
 
-            <Header showCart={() => setToggleCart(true)} />
-
-            <Routes>
-                <Route
-                    path="/"
-                    exact
-                    element={
-                        <Home
-                            items={items}
-                            searchItem={searchItem}
-                            changeSearchInput={changeSearchInput}
-                            clearSeacrhInput={clearSeacrhInput}
-                            handlerAddItemCart={handlerAddItemCart}
-                            handlerAddToFavorite={handlerAddToFavorite}
-                            loaded={loaded}
-                        />
-                    }
-                ></Route>
-                <Route
-                    path="/favorites"
-                    exact
-                    element={
-                        <Favorites
-                            items={favoriteItems}
-                            handlerAddToFavorite={handlerAddToFavorite}
-                        />
-                    }
-                ></Route>
-            </Routes>
-        </div>
+                <Routes>
+                    <Route
+                        path="/"
+                        exact
+                        element={
+                            <Home
+                                items={items}
+                                searchItem={searchItem}
+                                changeSearchInput={changeSearchInput}
+                                clearSeacrhInput={clearSeacrhInput}
+                                handlerAddItemCart={handlerAddItemCart}
+                                handlerAddToFavorite={handlerAddToFavorite}
+                                loaded={loaded}
+                            />
+                        }
+                    ></Route>
+                    <Route
+                        path="/favorites"
+                        exact
+                        element={
+                            <Favorites
+                                handlerAddToFavorite={handlerAddToFavorite}
+                            />
+                        }
+                    ></Route>
+                </Routes>
+            </div>
+        </StoreContext.Provider>
     );
 }
 
