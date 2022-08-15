@@ -6,14 +6,18 @@ import Home from "./pages/Home";
 import Favorites from "./pages/Favorites";
 import Header from "./components/Header";
 import Cart from "./components/Cart";
+import Orders from "./pages/Orders";
 
 function App() {
     const [items, setItems] = React.useState([]);
     const [cartItems, setCartItems] = React.useState([]);
     const [favoriteItems, setFavoriteItems] = React.useState([]);
+    const [orders, setOrders] = React.useState([]);
     const [searchItem, setSearchItems] = React.useState();
     const [toggleCart, setToggleCart] = React.useState(false);
     const [loaded, setLoaded] = React.useState(false);
+    const [orderNumber, setOrderNumber] = React.useState(1);
+    const [orderComplete, setOrderComplete] = React.useState(false);
 
     React.useEffect(() => {
         async function handlerFetchToApi() {
@@ -31,8 +35,13 @@ function App() {
                 "https://62efc45857311485d127eb48.mockapi.io/favorite"
             );
 
+            const ordersResponse = await axios.get(
+                "https://62efc45857311485d127eb48.mockapi.io/orders"
+            );
+
             setItems(itemsResponse.data);
             setFavoriteItems(favoriteResponse.data);
+            setOrders(ordersResponse.data);
             setLoaded(true);
         }
         handlerFetchToApi();
@@ -99,7 +108,7 @@ function App() {
         setSearchItems("");
     };
 
-    function cartTotalPrice(items) {
+    function cartTotalPrice() {
         let sum = 0;
         cartItems.forEach((item) => {
             sum += item.price;
@@ -107,8 +116,39 @@ function App() {
         return sum;
     }
 
+    async function createOrder(items) {
+        try {
+            await axios.post(
+                `https://62efc45857311485d127eb48.mockapi.io/orders/`,
+                { orderNumber, items }
+            );
+            setOrders((prev) => [...prev, { orderNumber, items }]);
+            setOrderComplete(true);
+        } catch (error) {
+            alert("Ошибка при оформлении заказа =(");
+        }
+    }
+
+    function updateCartAfterOrder() {
+        localStorage.clear();
+        setCartItems([]);
+        setToggleCart(false);
+        setOrderComplete(false);
+        setOrderNumber(orderNumber + 1);
+    }
+
     return (
-        <StoreContext.Provider value={{ items, cartItems, favoriteItems }}>
+        <StoreContext.Provider
+            value={{
+                items,
+                cartItems,
+                favoriteItems,
+                createOrder,
+                orderComplete,
+                orderNumber,
+                orders,
+            }}
+        >
             <div className="wrapper clear">
                 {toggleCart && (
                     <Cart
@@ -116,6 +156,7 @@ function App() {
                         removeItem={removeItemCart}
                         closeCart={() => setToggleCart(false)}
                         cartTotalPrice={cartTotalPrice}
+                        updateCartAfterOrder={updateCartAfterOrder}
                     />
                 )}
 
@@ -149,6 +190,7 @@ function App() {
                             />
                         }
                     ></Route>
+                    <Route path="/orders" exact element={<Orders />}></Route>
                 </Routes>
             </div>
         </StoreContext.Provider>

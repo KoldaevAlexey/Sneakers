@@ -1,8 +1,36 @@
-function Cart({ closeCart, removeItem, items = [], cartTotalPrice }) {
+import React from "react";
+import StoreContext from "../context";
+
+function Cart({
+    closeCart,
+    removeItem,
+    items = [],
+    cartTotalPrice,
+    updateCartAfterOrder,
+}) {
+    const { createOrder, orderComplete, orderNumber } =
+        React.useContext(StoreContext);
+
     return (
         <div className="cart_wrapper">
             <div className="cart">
-                {items.length === 0 ? (
+                {orderComplete ? (
+                    <div className="cart_order_complete">
+                        <img
+                            src="/img/order_complete.png"
+                            alt="cart"
+                            width={83}
+                            height={120}
+                        />
+                        <h2>Заказ оформлен!!!!</h2>
+                        <span>
+                            {`Ваш заказ #${orderNumber} скоро будет передан курьерской службе`}
+                        </span>
+                        <button onClick={updateCartAfterOrder}>
+                            Вернуться назад
+                        </button>
+                    </div>
+                ) : items.length === 0 ? (
                     <div className="cart_empty">
                         <img
                             src="/img/empty_cart.jpg"
@@ -65,7 +93,7 @@ function Cart({ closeCart, removeItem, items = [], cartTotalPrice }) {
                                     <b> руб.</b>
                                 </li>
                             </ul>
-                            <button>
+                            <button onClick={() => createOrder(items)}>
                                 <img
                                     className="btn_arrow"
                                     src="img/arrow.svg"

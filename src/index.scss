@@ -169,6 +169,36 @@ header {
                 cursor: pointer;
             }
         }
+        &_order_complete {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            top: 200px;
+            h2 {
+                margin-top: 10px;
+                color: #9dd558;
+            }
+            span {
+                text-align: center;
+                margin: 10px 0 20px 0;
+                opacity: 0.8;
+            }
+            button {
+                position: relative;
+                display: block;
+                margin: 10px auto;
+                width: 80%;
+                height: 50px;
+                border-style: none;
+                border-radius: 20px;
+                color: white;
+                background-color: #9dd558;
+                font-size: 16px;
+                font-weight: 500;
+                cursor: pointer;
+            }
+        }
     }
 
     .total_wrapper {
