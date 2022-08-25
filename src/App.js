@@ -13,7 +13,7 @@ function App() {
     const [cartItems, setCartItems] = React.useState([]);
     const [favoriteItems, setFavoriteItems] = React.useState([]);
     const [orders, setOrders] = React.useState([]);
-    const [searchItem, setSearchItems] = React.useState();
+    const [searchItem, setSearchItems] = React.useState("");
     const [toggleCart, setToggleCart] = React.useState(false);
     const [loaded, setLoaded] = React.useState(false);
     const [orderNumber, setOrderNumber] = React.useState(1);

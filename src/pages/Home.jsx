@@ -10,6 +10,28 @@ function Home({
     handlerAddToFavorite,
     loaded,
 }) {
+    const sneakers = items
+        .filter((obj) => {
+            if (obj.title.toLowerCase().includes(searchItem.toLowerCase())) {
+                return true;
+            } else return false;
+        })
+        .map((card, index) => (
+            <Card
+                key={index}
+                id={card.id}
+                title={card.title}
+                price={card.price}
+                imageUrl={card.imageUrl}
+                addToFavorite={(obj) => handlerAddToFavorite(obj)}
+                addItemCart={() => handlerAddItemCart(card)}
+            />
+        ));
+
+    const skeletons = [...new Array(8)].map((_, index) => (
+        <Loader key={index} />
+    ));
+
     return (
         <div className="content p-40">
             <div className="d-flex mb-40 align-center justify-between">
@@ -31,42 +53,7 @@ function Home({
                 </div>
             </div>
             <div className="cards_container d-flex flex-wrap">
-                {loaded ? (
-                    <>
-                        {items
-                            /* .filter((item) =>
-                    item.title
-                        .toLowerCase()
-                        .includes(
-                            searchItem && searchItem.toLowerCase()
-                        )
-                ) */
-                            .map((card, index) => (
-                                <Card
-                                    key={index}
-                                    id={card.id}
-                                    title={card.title}
-                                    price={card.price}
-                                    imageUrl={card.imageUrl}
-                                    addToFavorite={(obj) =>
-                                        handlerAddToFavorite(obj)
-                                    }
-                                    addItemCart={() => handlerAddItemCart(card)}
-                                />
-                            ))}
-                    </>
-                ) : (
-                    <>
-                        <Loader />
-                        <Loader />
-                        <Loader />
-                        <Loader />
-                        <Loader />
-                        <Loader />
-                        <Loader />
-                        <Loader />
-                    </>
-                )}
+                {loaded ? <>{sneakers}</> : <>{skeletons}</>}
             </div>
         </div>
     );
